@@ -541,13 +541,62 @@
         }
 
         /* ─── Responsive ─── */
-        @media (max-width: 480px) {
+        @media (max-width: 500px) {
+            body {
+                padding: 12px;
+                align-items: flex-start;
+                /* Better for long forms on mobile */
+                padding-top: 5vh;
+            }
+
+            .card {
+                max-width: 100%;
+                border-radius: 20px;
+                /* Slightly rounder on mobile for feel */
+                border: none;
+                box-shadow: none;
+                /* Cleaner look on mobile */
+            }
 
             .card-header,
             .card-body {
-                padding-left: 22px;
-                padding-right: 22px;
+                padding-left: 20px;
+                padding-right: 20px;
             }
+
+            .card-title {
+                font-size: 22px;
+            }
+
+            .theme-toggle {
+                top: 20px;
+                right: 20px;
+            }
+        }
+
+        /* ─── Cancel Button ─── */
+        .cancel-btn {
+            display: none;
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 8px;
+            color: var(--danger);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: fit-content;
+        }
+
+        .cancel-btn:hover {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: var(--danger);
+        }
+
+        #statusBox.pending .cancel-btn {
+            display: block;
         }
     </style>
 </head>
@@ -652,6 +701,7 @@
                     <div class="status-text">
                         <h4 id="statusTitle">Processing</h4>
                         <p id="statusMsg">Please wait<span class="dots"></span></p>
+                        <button class="cancel-btn" id="cancelBtn" onclick="cancelPayment()">Cancel & Edit</button>
                     </div>
                 </div>
             </div>
@@ -735,6 +785,17 @@
             label.textContent = loading ? 'Sending to phone…' : 'Pay with M-Pesa';
         }
 
+        let pollTimer = null;
+
+        function cancelPayment() {
+            if (pollTimer) {
+                clearInterval(pollTimer);
+                pollTimer = null;
+            }
+            document.getElementById('statusBox').style.display = 'none';
+            setLoading(false);
+        }
+
         // ── Normalise phone number ─────────────────────
         // User only types the 9-digit suffix; we prepend 254.
         function normalisePhone(suffix) {
@@ -795,7 +856,7 @@
             const INTERVAL = 3000; // 3 seconds
             let count = 0;
 
-            const timer = setInterval(async () => {
+            pollTimer = setInterval(async () => {
                 count++;
 
                 try {
@@ -803,7 +864,8 @@
                     const data = await res.json();
 
                     if (data.status === 'success') {
-                        clearInterval(timer);
+                        clearInterval(pollTimer);
+                        pollTimer = null;
                         setStatus('success', '✅', 'Payment Confirmed!',
                             `M-Pesa payment received${data.receipt ? ' · Ref: ' + data.receipt : ''}. Redirecting…`);
 
@@ -819,13 +881,15 @@
                         }, 2000);
 
                     } else if (data.status === 'failed') {
-                        clearInterval(timer);
+                        clearInterval(pollTimer);
+                        pollTimer = null;
                         setStatus('error', '❌', 'Transaction Failed',
                             'The M-Pesa transaction was declined or cancelled. Please try again.');
                         setLoading(false);
 
                     } else if (count >= MAX_POLLS) {
-                        clearInterval(timer);
+                        clearInterval(pollTimer);
+                        pollTimer = null;
                         setStatus('error', '⏱️', 'Request Timed Out',
                             'We did not receive a payment confirmation. If you completed the M-Pesa prompt, please contact support.');
                         setLoading(false);
@@ -836,7 +900,8 @@
                     console.warn('Status poll error:', err);
                     // Non-fatal – keep polling unless we hit the max
                     if (count >= MAX_POLLS) {
-                        clearInterval(timer);
+                        clearInterval(pollTimer);
+                        pollTimer = null;
                         setStatus('error', '❌', 'Connection Error',
                             'Could not verify payment status. Please check your M-Pesa messages.');
                         setLoading(false);
