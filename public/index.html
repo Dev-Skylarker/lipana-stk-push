@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout · Skitech Solutions</title>
+    <meta name="description"
+        content="Secure M-Pesa STK Push checkout by Skitech Solutions — fast, safe and reliable payments." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        /* ─── Reset & Tokens ─── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0b0e17;
+            --surface: #12192b;
+            --surface2: #1a2438;
+            --border: rgba(255, 255, 255, 0.08);
+            --accent: #15d152;
+            --accent2: #0fa944;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --text: #f0f4ff;
+            --muted: #8b99b5;
+            --radius: 16px;
+            --shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            color: var(--text);
+            background-image:
+                radial-gradient(ellipse 60% 50% at 50% -10%, rgba(21, 209, 82, 0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 30% at 90% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 60%);
+        }
+
+        /* ─── Card ─── */
+        .card {
+            width: 100%;
+            max-width: 440px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        /* ─── Card Header ─── */
+        .card-header {
+            padding: 32px 32px 24px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, rgba(21, 209, 82, 0.06) 0%, transparent 60%);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+
+        .brand-name {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+
+        .brand-name span {
+            color: var(--accent);
+        }
+
+        .card-title {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 6px;
+        }
+
+        .card-subtitle {
+            font-size: 13.5px;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        /* ─── Card Body ─── */
+        .card-body {
+            padding: 28px 32px 32px;
+        }
+
+        /* ─── Order Summary ─── */
+        .order-summary {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 22px;
+        }
+
+        .order-summary-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .order-item-name {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .order-item-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .order-item-price sup {
+            font-size: 13px;
+            vertical-align: super;
+        }
+
+        /* ─── Form ─── */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 7px;
+            letter-spacing: 0.02em;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+        }
+
+        /* ─── Phone prefix group ─── */
+        .phone-wrap {
+            display: flex;
+            align-items: stretch;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .phone-wrap:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(21, 209, 82, 0.15);
+        }
+
+        .phone-prefix {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 12px 0 14px;
+            background: rgba(21, 209, 82, 0.08);
+            border-right: 1px solid var(--border);
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--accent);
+            white-space: nowrap;
+            user-select: none;
+            letter-spacing: 0.02em;
+        }
+
+        .phone-prefix svg {
+            color: var(--muted);
+            flex-shrink: 0;
+        }
+
+        input[type="tel"] {
+            flex: 1;
+            min-width: 0;
+            padding: 13px 14px;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            outline: none;
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 13px 14px 13px 42px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(21, 209, 82, 0.15);
+        }
+
+        input::placeholder {
+            color: var(--muted);
+            opacity: 0.7;
+        }
+
+        /* ─── Pay Button ─── */
+        #payBtn {
+            width: 100%;
+            margin-top: 8px;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15.5px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.01em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+            box-shadow: 0 6px 24px rgba(21, 209, 82, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #payBtn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
+            transform: translateX(-100%);
+        }
+
+        #payBtn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(21, 209, 82, 0.45);
+        }
+
+        #payBtn:hover:not(:disabled)::before {
+            animation: shimmer 0.7s ease forwards;
+        }
+
+        @keyframes shimmer {
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        #payBtn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        #payBtn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid rgba(255, 255, 255, 0.4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.75s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ─── Status Banner ─── */
+        #statusBox {
+            margin-top: 18px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .status-inner {
+            padding: 16px 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+        }
+
+        .status-icon {
+            font-size: 22px;
+            flex-shrink: 0;
+            line-height: 1;
+            margin-top: 1px;
+        }
+
+        .status-text h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .status-text p {
+            font-size: 13px;
+            line-height: 1.5;
+            opacity: 0.85;
+        }
+
+        /* States */
+        #statusBox.pending {
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        #statusBox.pending .status-text {
+            color: #fbbf24;
+        }
+
+        #statusBox.success {
+            background: rgba(21, 209, 82, 0.12);
+            border: 1px solid rgba(21, 209, 82, 0.35);
+        }
+
+        #statusBox.success .status-text {
+            color: #4ade80;
+        }
+
+        #statusBox.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        #statusBox.error .status-text {
+            color: #f87171;
+        }
+
+        /* Progress dots for pending */
+        .dots::after {
+            content: '';
+            animation: dots 1.2s steps(3, end) infinite;
+        }
+
+        @keyframes dots {
+            0% {
+                content: '';
+            }
+
+            33% {
+                content: '.';
+            }
+
+            66% {
+                content: '..';
+            }
+
+            100% {
+                content: '...';
+            }
+        }
+
+        /* ─── Footer ─── */
+        .card-footer {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--muted);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .card-footer .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .card-footer .footer-brand a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .card-footer .footer-brand a:hover {
+            opacity: 0.75;
+            text-decoration: underline;
+        }
+
+        .card-footer .footer-meta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card-footer .footer-dot {
+            opacity: 0.4;
+        }
+
+        .card-footer svg {
+            width: 12px;
+            height: 12px;
+            flex-shrink: 0;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 480px) {
+
+            .card-header,
+            .card-body {
+                padding-left: 22px;
+                padding-right: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card" role="main">
+
+        <!-- Header -->
+        <div class="card-header">
+            <div class="brand">
+                <div class="brand-icon" aria-hidden="true">
+                    <!-- Lightning bolt icon -->
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                    </svg>
+                </div>
+                <span class="brand-name">Skitech <span>Solutions</span></span>
+            </div>
+            <h1 class="card-title">Secure Checkout</h1>
+            <p class="card-subtitle">Pay safely via M-Pesa STK Push. A prompt will be sent to your phone.</p>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body">
+
+            <!-- Order Summary -->
+            <div class="order-summary" aria-label="Order summary">
+                <div class="order-summary-label">Order Summary</div>
+                <div class="order-item">
+                    <span class="order-item-name">Service Payment</span>
+                    <span class="order-item-price" id="summaryAmount">KES <span id="displayAmount">—</span></span>
+                </div>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+                <label for="phone">M-Pesa Phone Number</label>
+                <div class="phone-wrap">
+                    <span class="phone-prefix" aria-hidden="true">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                            <line x1="12" y1="18" x2="12.01" y2="18" />
+                        </svg>
+                        +254
+                    </span>
+                    <input type="tel" id="phone" placeholder="712345678" autocomplete="tel" inputmode="numeric"
+                        maxlength="9" aria-label="M-Pesa phone number (without country code)"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+                </div>
+            </div>
+
+            <!-- Amount -->
+            <div class="form-group">
+                <label for="amount">Amount (KES)</label>
+                <div class="input-wrap">
+                    <span class="input-icon" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="16 10 12 6 8 10" />
+                            <line x1="12" y1="6" x2="12" y2="18" />
+                        </svg>
+                    </span>
+                    <input type="number" id="amount" placeholder="Enter amount" value="10" min="1"
+                        aria-label="Payment amount in KES" />
+                </div>
+            </div>
+
+            <!-- Pay Button -->
+            <button id="payBtn" onclick="pay()" aria-live="polite">
+                <span class="btn-spinner" id="btnSpinner" aria-hidden="true"></span>
+                <svg id="btnIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white"
+                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                <span id="btnLabel">Pay with M-Pesa</span>
+            </button>
+
+            <!-- Status Box -->
+            <div id="statusBox" role="alert" aria-live="polite">
+                <div class="status-inner">
+                    <div class="status-icon" id="statusIcon" aria-hidden="true">⏳</div>
+                    <div class="status-text">
+                        <h4 id="statusTitle">Processing</h4>
+                        <p id="statusMsg">Please wait<span class="dots"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="card-footer" aria-label="Footer">
+                <div class="footer-brand">
+                    Built by
+                    <a href="https://skitech-website.vercel.app/" target="_blank" rel="noopener noreferrer"
+                        aria-label="Skitech Solutions website">Skitech Solutions</a>
+                    &mdash; All rights reserved &copy; 2026
+                </div>
+                <div class="footer-meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    Safe &amp; Secure
+                    <span class="footer-dot">&bull;</span>
+                    Powered by Lipana Technologies
+                </div>
+            </footer>
+
+        </div>
+    </div><!-- /.card -->
+
+    <script>
+        // ── Update display amount live ──────────────────
+        const amountInput = document.getElementById('amount');
+        const displayAmount = document.getElementById('displayAmount');
+
+        function updateSummary() {
+            const v = parseFloat(amountInput.value);
+            displayAmount.textContent = isNaN(v) || v <= 0 ? '—' : v.toLocaleString('en-KE');
+        }
+
+        amountInput.addEventListener('input', updateSummary);
+        updateSummary();
+
+        // ── UI helpers ─────────────────────────────────
+        function setStatus(state, icon, title, msg) {
+            const box = document.getElementById('statusBox');
+            box.className = state;
+            box.style.display = 'block';
+            document.getElementById('statusIcon').textContent = icon;
+            document.getElementById('statusTitle').textContent = title;
+            const msgEl = document.getElementById('statusMsg');
+
+            if (state === 'pending') {
+                msgEl.innerHTML = msg + '<span class="dots"></span>';
+            } else {
+                msgEl.textContent = msg;
+            }
+        }
+
+        function setLoading(loading) {
+            const btn = document.getElementById('payBtn');
+            const spinner = document.getElementById('btnSpinner');
+            const icon = document.getElementById('btnIcon');
+            const label = document.getElementById('btnLabel');
+
+            btn.disabled = loading;
+            spinner.style.display = loading ? 'block' : 'none';
+            icon.style.display = loading ? 'none' : 'block';
+            label.textContent = loading ? 'Sending to phone…' : 'Pay with M-Pesa';
+        }
+
+        // ── Normalise phone number ─────────────────────
+        // User only types the 9-digit suffix; we prepend 254.
+        function normalisePhone(suffix) {
+            const digits = suffix.trim().replace(/\D/g, '');
+            return '254' + digits;
+        }
+
+        // ── Initiate payment ───────────────────────────
+        async function pay() {
+            const suffix = document.getElementById('phone').value.trim();
+            const rawAmount = document.getElementById('amount').value;
+
+            // Suffix must be exactly 9 digits (e.g. 712345678)
+            if (!/^[0-9]{9}$/.test(suffix)) {
+                setStatus('error', '⚠️', 'Invalid Phone', 'Enter the 9 digits after +254 (e.g. 712345678).');
+                return;
+            }
+
+            const phone = normalisePhone(suffix);
+            const amount = parseInt(rawAmount, 10);
+
+            if (!amount || amount < 1) {
+                setStatus('error', '⚠️', 'Invalid Amount', 'Enter a valid amount of at least KES 1.');
+                return;
+            }
+
+            setLoading(true);
+            setStatus('pending', '📲', 'Check Your Phone', 'An M-Pesa prompt is being sent to your phone');
+
+            try {
+                const res = await fetch('/pay', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone, amount }),
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data.error || `Server error (${res.status})`);
+                }
+
+                if (!data.trackingId) {
+                    throw new Error('No tracking ID received from server.');
+                }
+
+                poll(data.trackingId);
+
+            } catch (err) {
+                setStatus('error', '❌', 'Payment Failed', err.message || 'Something went wrong. Please try again.');
+                setLoading(false);
+            }
+        }
+
+        // ── Poll for status ────────────────────────────
+        function poll(trackingId) {
+            const MAX_POLLS = 40;   // ~2 minutes
+            const INTERVAL = 3000; // 3 seconds
+            let count = 0;
+
+            const timer = setInterval(async () => {
+                count++;
+
+                try {
+                    const res = await fetch('/status/' + encodeURIComponent(trackingId));
+                    const data = await res.json();
+
+                    if (data.status === 'success') {
+                        clearInterval(timer);
+                        setStatus('success', '✅', 'Payment Confirmed!',
+                            `M-Pesa payment received${data.receipt ? ' · Ref: ' + data.receipt : ''}. Redirecting…`);
+
+                        // Redirect to thank-you page with receipt info
+                        const params = new URLSearchParams({
+                            trackingId,
+                            receipt: data.receipt || '',
+                            phone: data.phone || '',
+                            amount: data.amount || '',
+                        });
+                        setTimeout(() => {
+                            window.location.href = '/thankyou?' + params.toString();
+                        }, 2000);
+
+                    } else if (data.status === 'failed') {
+                        clearInterval(timer);
+                        setStatus('error', '❌', 'Transaction Failed',
+                            'The M-Pesa transaction was declined or cancelled. Please try again.');
+                        setLoading(false);
+
+                    } else if (count >= MAX_POLLS) {
+                        clearInterval(timer);
+                        setStatus('error', '⏱️', 'Request Timed Out',
+                            'We did not receive a payment confirmation. If you completed the M-Pesa prompt, please contact support.');
+                        setLoading(false);
+                    }
+                    // else still pending – keep polling
+
+                } catch (err) {
+                    console.warn('Status poll error:', err);
+                    // Non-fatal – keep polling unless we hit the max
+                    if (count >= MAX_POLLS) {
+                        clearInterval(timer);
+                        setStatus('error', '❌', 'Connection Error',
+                            'Could not verify payment status. Please check your M-Pesa messages.');
+                        setLoading(false);
+                    }
+                }
+            }, INTERVAL);
+        }
+    </script>
+</body>
+
+</html>

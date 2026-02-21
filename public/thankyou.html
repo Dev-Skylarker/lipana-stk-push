@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Successful · Skitech Solutions</title>
+    <meta name="description"
+        content="Your M-Pesa payment was received successfully. Thank you for choosing Skitech Solutions." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0b0e17;
+            --surface: #12192b;
+            --border: rgba(255, 255, 255, 0.08);
+            --accent: #15d152;
+            --text: #f0f4ff;
+            --muted: #8b99b5;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            color: var(--text);
+            background-image:
+                radial-gradient(ellipse 60% 50% at 50% -5%, rgba(21, 209, 82, 0.14) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 30% at 90% 80%, rgba(59, 130, 246, 0.07) 0%, transparent 60%);
+        }
+
+        .card {
+            width: 100%;
+            max-width: 460px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+            padding: 48px 40px;
+            text-align: center;
+        }
+
+        /* ─── Success Ring Animation ─── */
+        .success-ring {
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 28px;
+            position: relative;
+        }
+
+        .success-ring svg {
+            width: 88px;
+            height: 88px;
+        }
+
+        .success-ring .ring-bg {
+            fill: none;
+            stroke: rgba(21, 209, 82, 0.15);
+            stroke-width: 4;
+        }
+
+        .success-ring .ring-fill {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-dasharray: 251;
+            stroke-dashoffset: 251;
+            animation: ring-draw 0.8s ease forwards 0.1s;
+        }
+
+        @keyframes ring-draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .success-ring .check {
+            stroke: var(--accent);
+            stroke-width: 3.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            stroke-dasharray: 40;
+            stroke-dashoffset: 40;
+            animation: check-draw 0.4s ease forwards 0.75s;
+        }
+
+        @keyframes check-draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* Glow pulse */
+        .success-ring::after {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(21, 209, 82, 0.18) 0%, transparent 70%);
+            animation: glow-pulse 2s ease-in-out infinite 1s;
+        }
+
+        @keyframes glow-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.12);
+                opacity: 0.6;
+            }
+        }
+
+        /* ─── Text ─── */
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        /* ─── Details Box ─── */
+        .details {
+            background: rgba(21, 209, 82, 0.06);
+            border: 1px solid rgba(21, 209, 82, 0.2);
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .detail-row+.detail-row {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-key {
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: var(--text);
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .detail-value.green {
+            color: var(--accent);
+        }
+
+        /* ─── Button ─── */
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 28px;
+            background: linear-gradient(135deg, var(--accent), #0fa944);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 6px 24px rgba(21, 209, 82, 0.35);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(21, 209, 82, 0.45);
+        }
+
+        .brand-foot {
+            margin-top: 28px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .brand-foot span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 36px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card" role="main">
+
+        <!-- Success animation -->
+        <div class="success-ring" aria-label="Payment successful">
+            <svg viewBox="0 0 88 88" xmlns="http://www.w3.org/2000/svg">
+                <circle class="ring-bg" cx="44" cy="44" r="40" />
+                <circle class="ring-fill" cx="44" cy="44" r="40" transform="rotate(-90 44 44)" />
+                <polyline class="check" points="28,44 40,56 60,34" />
+            </svg>
+        </div>
+
+        <h1>Payment Received! 🎉</h1>
+        <p class="subtitle">
+            Your M-Pesa payment has been confirmed.<br />
+            Thank you for choosing <strong>Skitech Solutions</strong>.
+        </p>
+
+        <!-- Transaction details (populated by JS) -->
+        <div class="details" id="details" aria-label="Transaction details">
+            <div class="detail-row">
+                <span class="detail-key">Status</span>
+                <span class="detail-value green">✅ Success</span>
+            </div>
+            <div class="detail-row" id="rowReceipt" style="display:none">
+                <span class="detail-key">M-Pesa Ref</span>
+                <span class="detail-value" id="valReceipt">—</span>
+            </div>
+            <div class="detail-row" id="rowAmount" style="display:none">
+                <span class="detail-key">Amount Paid</span>
+                <span class="detail-value green" id="valAmount">—</span>
+            </div>
+            <div class="detail-row" id="rowPhone" style="display:none">
+                <span class="detail-key">Phone</span>
+                <span class="detail-value" id="valPhone">—</span>
+            </div>
+            <div class="detail-row" id="rowDate">
+                <span class="detail-key">Date &amp; Time</span>
+                <span class="detail-value" id="valDate">—</span>
+            </div>
+        </div>
+
+        <a href="/" class="btn-home" id="homeBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            Back to Home
+        </a>
+
+        <p class="brand-foot">Powered by <span>Skitech Solutions</span> · Secured by Lipana &amp; M-Pesa</p>
+
+    </div>
+
+    <script>
+        (function () {
+            // ── Read params from URL ──
+            const params = new URLSearchParams(window.location.search);
+            const receipt = params.get('receipt') || '';
+            const amount = params.get('amount') || '';
+            const phone = params.get('phone') || '';
+
+            if (receipt) {
+                document.getElementById('rowReceipt').style.display = 'flex';
+                document.getElementById('valReceipt').textContent = receipt;
+            }
+
+            if (amount) {
+                document.getElementById('rowAmount').style.display = 'flex';
+                document.getElementById('valAmount').textContent = 'KES ' + parseInt(amount, 10).toLocaleString('en-KE');
+            }
+
+            if (phone) {
+                // Format phone for display: 254XXXXXXXXX → 07XX XXX XXX
+                let p = phone.replace(/^254/, '0');
+                p = p.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
+                document.getElementById('rowPhone').style.display = 'flex';
+                document.getElementById('valPhone').textContent = p;
+            }
+
+            // Date/time
+            document.getElementById('valDate').textContent =
+                new Date().toLocaleString('en-KE', {
+                    dateStyle: 'medium',
+                    timeStyle: 'short',
+                });
+        })();
+    </script>
+
+</body>
+
+</html>
