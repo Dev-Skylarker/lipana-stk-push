@@ -286,15 +286,25 @@ def check_status(tracking_id: str):
     """
     Poll payment status.
 
-    If the local record is still 'pending', we ask the Lipana API directly
-    so status resolves even before a webhook reaches this server.
-
-    Returns:
-        { "status": "pending"|"success"|"failed", "phone": "...", "amount": ... }
+    If the local record is missing (due to server restart or multiple workers),
+    we try to recover it by asking the Lipana API directly.
     """
     record = payment_store.get(tracking_id)
+
+    # ── Attempt Recovery if not found in memory ──
     if not record:
-        return jsonify({"status": "not_found"}), 404
+        log.info("Recovery poll for missing id=%s", tracking_id)
+        live = fetch_lipana_status(tracking_id)
+        if live:
+            # Reconstruct the record from API data
+            payment_store[tracking_id] = {
+                "status": live["status"],
+                "phone":  "Recovered",
+                "amount": 0 # Amount isn't critical for the status screen
+            }
+            record = payment_store[tracking_id]
+        else:
+            return jsonify({"status": "not_found"}), 404
 
     # ── Active API poll while still pending ──
     if record["status"] == "pending":
