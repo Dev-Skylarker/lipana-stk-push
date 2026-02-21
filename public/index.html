@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Secure Checkout · Skitech Solutions</title>
+    <title>Checkout · Skitech Solutions</title>
     <meta name="description"
         content="Secure M-Pesa STK Push checkout by Skitech Solutions — fast, safe and reliable payments." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
 
     <style>
-        /* ─── Tokens & Reset ─── */
+        /* ─── Reset & Tokens ─── */
         *,
         *::before,
         *::after {
@@ -31,79 +30,61 @@
             --accent: #15d152;
             --accent2: #0fa944;
             --danger: #ef4444;
+            --warning: #f59e0b;
             --text: #f0f4ff;
             --muted: #8b99b5;
-            --radius: 20px;
-            --shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+            --radius: 16px;
+            --shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
             --gradient-op: 0.12;
-            --font-main: 'Plus Jakarta Sans', sans-serif;
-            --font-alt: 'Inter', sans-serif;
         }
 
         [data-theme="light"] {
             --bg: #f8fafc;
             --surface: #ffffff;
             --surface2: #f1f5f9;
-            --border: rgba(0, 0, 0, 0.06);
+            --border: rgba(0, 0, 0, 0.08);
             --text: #0f172a;
             --muted: #64748b;
-            --shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
-            --gradient-op: 0.04;
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            --gradient-op: 0.05;
         }
 
         body {
-            font-family: var(--font-main);
+            font-family: 'Inter', system-ui, sans-serif;
             background: var(--bg);
             min-height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 24px 16px;
             color: var(--text);
-            transition: background 0.4s ease, color 0.4s ease;
+            transition: background 0.3s, color 0.3s;
             background-image:
                 radial-gradient(ellipse 60% 50% at 50% -10%, rgba(21, 209, 82, var(--gradient-op)) 0%, transparent 70%),
                 radial-gradient(ellipse 40% 30% at 90% 80%, rgba(59, 130, 246, calc(var(--gradient-op) * 0.7)) 0%, transparent 60%);
         }
 
-        /* ─── Card Structure ─── */
+        /* ─── Card ─── */
         .card {
             width: 100%;
-            max-width: 460px;
+            max-width: 440px;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            position: relative;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ─── Views (SPA Flow) ─── */
-        .view {
-            display: none;
-            padding: 32px;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.4s ease;
-        }
-
-        .view.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
+            position: relative;
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
 
         /* ─── Theme Toggle ─── */
         .theme-toggle {
             position: absolute;
-            top: 24px;
-            right: 24px;
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
+            top: 28px;
+            right: 28px;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
             background: var(--surface2);
             border: 1px solid var(--border);
             display: flex;
@@ -112,30 +93,45 @@
             cursor: pointer;
             color: var(--muted);
             transition: all 0.2s;
-            z-index: 20;
+            z-index: 10;
         }
 
         .theme-toggle:hover {
             color: var(--accent);
             border-color: var(--accent);
-            transform: scale(1.05);
+            transform: translateY(-1px);
         }
 
-        [data-theme="light"] .sun-icon,
+        .theme-toggle svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        [data-theme="light"] .sun-icon {
+            display: none;
+        }
+
         [data-theme="dark"] .moon-icon {
             display: none;
         }
 
-        /* ─── Header ─── */
+        /* Default to dark if no theme set yet */
+        :root:not([data-theme]) .moon-icon {
+            display: none;
+        }
+
+        /* ─── Card Header ─── */
         .card-header {
-            margin-bottom: 28px;
+            padding: 32px 32px 24px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, rgba(21, 209, 82, 0.06) 0%, transparent 60%);
         }
 
         .brand {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         .brand-icon {
@@ -156,323 +152,196 @@
 
         .brand-name {
             font-size: 15px;
-            font-weight: 800;
+            font-weight: 700;
+            letter-spacing: 0.01em;
         }
 
         .brand-name span {
             color: var(--accent);
         }
 
-        .title {
+        .card-title {
             font-size: 26px;
             font-weight: 800;
             letter-spacing: -0.03em;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
-        .subtitle {
+        .card-subtitle {
             font-size: 14px;
             color: var(--muted);
             line-height: 1.6;
-            font-family: var(--font-alt);
+            margin-bottom: 0;
         }
 
-        /* ─── Selection List ─── */
-        .method-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .method-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
+        /* ─── Card Body ─── */
+        .card-body {
+            padding: 28px 32px 32px;
             position: relative;
         }
 
-        .method-item:hover {
+        /* ─── Selection Options ─── */
+        .select-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .option-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .option-item:hover:not(.disabled) {
             border-color: var(--accent);
-            transform: translateX(4px);
+            background: rgba(21, 209, 82, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .method-item.disabled {
-            opacity: 0.6;
+        .option-item.disabled {
+            opacity: 0.5;
             cursor: not-allowed;
+            filter: grayscale(0.5);
         }
 
-        .method-item.disabled:hover {
-            transform: none;
-            border-color: var(--border);
+        .option-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
 
-        .method-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
+        .option-icon {
+            width: 40px;
+            height: 40px;
             background: var(--surface);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            border: 1px solid var(--border);
         }
 
-        .method-info b {
-            display: block;
+        .option-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--accent);
+        }
+
+        .option-text h4 {
             font-size: 15px;
+            font-weight: 700;
             margin-bottom: 2px;
         }
 
-        .method-info span {
+        .option-text p {
             font-size: 12px;
             color: var(--muted);
         }
 
-        .badge-soon {
-            position: absolute;
-            right: 16px;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 8px;
-            background: var(--surface);
-            color: var(--muted);
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* ─── Forms ─── */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--muted);
-            margin-bottom: 8px;
-        }
-
-        .input-box {
-            display: flex;
-            align-items: stretch;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .input-box:focus-within {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(21, 209, 82, 0.1);
-        }
-
-        .input-box.error {
-            border-color: var(--danger);
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-        }
-
-        .prefix {
-            display: flex;
-            align-items: center;
-            padding: 0 14px;
-            background: rgba(21, 209, 82, 0.08);
-            border-right: 1px solid var(--border);
-            font-weight: 700;
-            color: var(--accent);
-            font-size: 14px;
-        }
-
-        input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            padding: 14px;
-            color: var(--text);
-            font-family: var(--font-alt);
-            font-size: 15px;
-            font-weight: 500;
-            outline: none;
-        }
-
-        input::placeholder {
+        .chevron {
             color: var(--muted);
             opacity: 0.5;
         }
 
-        .hint {
-            font-size: 11.5px;
-            color: var(--muted);
-            margin-top: 6px;
-            display: block;
-        }
-
-        .hint.error {
-            color: var(--danger);
-            font-weight: 500;
-        }
-
-        /* ─── Buttons ─── */
-        .btn-primary {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            color: #fff;
-            border: none;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 8px 25px rgba(21, 209, 82, 0.3);
+        /* ─── Footer ─── */
+        .card-footer {
+            margin-top: 24px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(21, 209, 82, 0.45);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            box-shadow: none;
-            filter: grayscale(0.5);
-        }
-
-        .btn-back {
-            background: none;
-            border: none;
-            color: var(--muted);
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
+            flex-direction: column;
             align-items: center;
             gap: 6px;
-            margin-bottom: 20px;
-            transition: color 0.2s;
+            font-size: 12px;
+            color: var(--muted);
+            text-align: center;
+            line-height: 1.6;
         }
 
-        .btn-back:hover {
+        .card-footer .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
             color: var(--text);
         }
 
-        /* ─── Status & Feedback ─── */
-        .status-card {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
-            display: none;
-            margin-top: 20px;
-        }
-
-        .status-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .spinner {
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(21, 209, 82, 0.2);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .cancel-row {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid var(--border);
-        }
-
-        .btn-cancel {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-cancel:hover {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: var(--danger);
-        }
-
-        /* ─── Custom Footer ─── */
-        .card-footer {
-            padding: 24px;
-            border-top: 1px solid var(--border);
-            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.02));
-            text-align: center;
-        }
-
-        .footer-brand {
-            margin-bottom: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--muted);
-        }
-
-        .footer-brand a {
+        .card-footer .footer-brand a {
             color: var(--accent);
             text-decoration: none;
+            transition: opacity 0.2s;
         }
 
-        .footer-secure {
-            font-size: 11px;
-            color: var(--muted);
+        .card-footer .footer-brand a:hover {
+            opacity: 0.75;
+            text-decoration: underline;
+        }
+
+        .card-footer .footer-meta {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .footer-secure svg {
+        .card-footer .footer-dot {
+            opacity: 0.4;
+        }
+
+        .card-footer svg {
             width: 12px;
             height: 12px;
+            flex-shrink: 0;
         }
 
         /* ─── Responsive ─── */
         @media (max-width: 500px) {
             body {
-                padding: 0;
-                align-items: flex-end;
+                padding: 12px;
+                align-items: flex-start;
+                padding-top: 5vh;
             }
 
             .card {
                 max-width: 100%;
-                border-radius: 24px 24px 0 0;
+                border-radius: 20px;
                 border: none;
+                box-shadow: none;
             }
 
-            .view {
-                padding: 24px;
+            .card-header,
+            .card-body {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .card-title {
+                font-size: 24px;
+            }
+
+            .theme-toggle {
+                top: 24px;
+                right: 24px;
             }
         }
     </style>
@@ -480,10 +349,10 @@
 
 <body>
 
-    <div class="card" id="mainCard">
+    <div class="card" role="main">
         <!-- Theme Toggle -->
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle Light/Dark Theme">
-            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <button class="theme-toggle" id="themeToggle" title="Toggle Light/Dark Mode" aria-label="Toggle theme">
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="5"></circle>
                 <line x1="12" y1="1" x2="12" y2="3"></line>
                 <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -494,249 +363,106 @@
                 <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
                 <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
-            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
         </button>
 
-        <!-- VIEW 1: WELCOME & SELECTION -->
-        <div class="view active" id="viewSelection">
-            <div class="card-header">
-                <div class="brand">
-                    <div class="brand-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-                        </svg>
-                    </div>
-                    <span class="brand-name">Skitech <span>Solutions</span></span>
+        <!-- Header -->
+        <div class="card-header">
+            <div class="brand">
+                <div class="brand-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                    </svg>
                 </div>
-                <h1 class="title">Secure Checkout</h1>
-                <p class="subtitle">Welcome to our secure checkout portal. All our payment channels are audited and
-                    tested for your safety. Select your preferred method below:</p>
+                <span class="brand-name">Skitech <span>Solutions</span></span>
             </div>
-
-            <div class="method-list">
-                <div class="method-item" onclick="showView('viewStk')">
-                    <div class="method-icon">📲</div>
-                    <div class="method-info">
-                        <b>M-Pesa STK Push</b>
-                        <span>Instant prompt on your phone</span>
-                    </div>
-                </div>
-                <div class="method-item disabled">
-                    <div class="method-icon">💳</div>
-                    <div class="method-info">
-                        <b>Card Payment</b>
-                        <span>Visa, Mastercard & Amex</span>
-                    </div>
-                    <span class="badge-soon">Soon</span>
-                </div>
-                <div class="method-item disabled">
-                    <div class="method-icon">🏦</div>
-                    <div class="method-info">
-                        <b>Bank Transfer</b>
-                        <span>Direct RTGS/PesaLink</span>
-                    </div>
-                    <span class="badge-soon">Soon</span>
-                </div>
-            </div>
+            <p class="card-subtitle">Welcome to our secure checkout. All our payment channels are tested and verified
+                for safe transactions.</p>
         </div>
 
-        <!-- VIEW 2: STK FORM -->
-        <div class="view" id="viewStk">
-            <button class="btn-back" onclick="showView('viewSelection')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                    <path d="M19 12H5M12 19l-7-7 7-7" />
-                </svg>
-                Change Method
-            </button>
+        <!-- Body -->
+        <div class="card-body">
+            <h1 class="card-title">Select Payment Method</h1>
+            <span class="select-label">Available Channels</span>
 
-            <div class="card-header">
-                <h1 class="title">M-Pesa Payment</h1>
-                <p class="subtitle">A secure payment prompt will be sent to the phone number you provide below.</p>
-            </div>
-
-            <div class="form-container">
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <div class="input-box" id="phoneBox">
-                        <div class="prefix">+254</div>
-                        <input type="tel" id="phone" placeholder="7XXXXXXXX" maxlength="9" inputmode="numeric">
-                    </div>
-                    <small class="hint" id="phoneHint">Enter the 9 digits after +254</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="amount">Amount (KES)</label>
-                    <div class="input-box" id="amountBox">
-                        <input type="number" id="amount" placeholder="e.g. 1000" min="1">
-                    </div>
-                    <small class="hint">Currency: Kenyan Shillings</small>
-                </div>
-
-                <button class="btn-primary" id="payBtn" disabled onclick="handlePayment()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    </svg>
-                    Pay with M-Pesa
-                </button>
-
-                <!-- Status Feedback -->
-                <div class="status-card" id="statusBox">
-                    <div class="status-header">
-                        <div class="spinner" id="statusSpinner"></div>
-                        <div class="status-text">
-                            <b id="statusTitle">Processing</b>
-                            <p class="hint" id="statusMsg">Please checkout your phone...</p>
+            <div class="option-list">
+                <!-- M-Pesa -->
+                <a href="/checkout" class="option-item" id="mpesaOption">
+                    <div class="option-info">
+                        <div class="option-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                                <line x1="12" y1="18" x2="12.01" y2="18" />
+                            </svg>
+                        </div>
+                        <div class="option-text">
+                            <h4>M-Pesa STK</h4>
+                            <p>Instant mobile payment</p>
                         </div>
                     </div>
-                    <div class="cancel-row" id="cancelRow">
-                        <button class="btn-cancel" onclick="resetForm()">Cancel & Edit</button>
+                    <div class="chevron">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                    </div>
+                </a>
+
+                <!-- Card (Disabled) -->
+                <div class="option-item disabled" title="Coming soon">
+                    <div class="option-info">
+                        <div class="option-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                                <line x1="1" y1="10" x2="23" y2="10" />
+                            </svg>
+                        </div>
+                        <div class="option-text">
+                            <h4>Card / Other methods</h4>
+                            <p>Coming soon</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- FOOTER (Persistent) -->
-        <footer class="card-footer">
-            <div class="footer-brand">
-                Built by <a href="https://skitech-website.vercel.app/" target="_blank">Skitech Solutions</a>
-                &mdash; All rights reserved &copy; 2026
-            </div>
-            <div class="footer-secure">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                </svg>
-                Safe & Secure &bull; Powered by Lipana Technologies
-            </div>
-        </footer>
+            <!-- Footer -->
+            <footer class="card-footer" aria-label="Footer">
+                <div class="footer-brand">
+                    Built by
+                    <a href="https://skitech-website.vercel.app/" target="_blank" rel="noopener noreferrer"
+                        aria-label="Skitech Solutions website">Skitech Solutions</a>
+                    &mdash; All rights reserved &copy; 2026
+                </div>
+                <div class="footer-meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    Safe &amp; Secure
+                    <span class="footer-dot">&bull;</span>
+                    Powered by Lipana Technologies
+                </div>
+            </footer>
+        </div>
     </div>
 
     <script>
-        // ── Theme Management ───────────────────────
-        const themeBtn = document.getElementById('themeToggle');
+        // ── Theme Logic ────────────────────────────────
+        const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
 
-        const initTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-        html.setAttribute('data-theme', initTheme);
+        const storedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        html.setAttribute('data-theme', storedTheme);
 
-        themeBtn.addEventListener('click', () => {
-            const current = html.getAttribute('data-theme');
-            const target = current === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', target);
-            localStorage.setItem('theme', target);
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
         });
-
-        // ── View Management ────────────────────────
-        function showView(viewId) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            setTimeout(() => {
-                document.getElementById(viewId).classList.add('active');
-            }, 50);
-        }
-
-        // ── Real-time Validation ───────────────────
-        const phoneArr = document.getElementById('phone');
-        const amountArr = document.getElementById('amount');
-        const payBtn = document.getElementById('payBtn');
-        const phoneBox = document.getElementById('phoneBox');
-        const phoneHint = document.getElementById('phoneHint');
-
-        function validate() {
-            const phoneVal = phoneArr.value.trim();
-            const amountVal = amountArr.value.trim();
-
-            const isPhoneValid = /^[17][0-9]{8}$/.test(phoneVal);
-            const isAmountValid = amountVal !== "" && parseInt(amountVal) >= 1;
-
-            // UI Feedback for phone
-            if (phoneVal.length > 0 && !isPhoneValid) {
-                phoneBox.classList.add('error');
-                phoneHint.classList.add('error');
-                phoneHint.textContent = "Start with 7 or 1 (9 digits total)";
-            } else {
-                phoneBox.classList.remove('error');
-                phoneHint.classList.remove('error');
-                phoneHint.textContent = "Enter the 9 digits after +254";
-            }
-
-            payBtn.disabled = !(isPhoneValid && isAmountValid);
-        }
-
-        phoneArr.addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/\D/g, '');
-            validate();
-        });
-        amountArr.addEventListener('input', validate);
-
-        // ── Payment Logic ──────────────────────────
-        let pollInterval = null;
-
-        function resetForm() {
-            if (pollInterval) clearInterval(pollInterval);
-            document.getElementById('statusBox').style.display = 'none';
-            document.getElementById('payBtn').style.display = 'flex';
-            document.getElementById('payBtn').disabled = false;
-            document.querySelectorAll('input').forEach(i => i.disabled = false);
-        }
-
-        async function handlePayment() {
-            const phone = "254" + phoneArr.value;
-            const amount = amountArr.value;
-
-            // Disable UI
-            payBtn.style.display = 'none';
-            document.querySelectorAll('input').forEach(i => i.disabled = true);
-
-            const statusBox = document.getElementById('statusBox');
-            const statusTitle = document.getElementById('statusTitle');
-            const statusMsg = document.getElementById('statusMsg');
-            const statusSpinner = document.getElementById('statusSpinner');
-
-            statusBox.style.display = 'block';
-            statusTitle.textContent = "Initiating...";
-            statusMsg.textContent = "Connecting to Safaricom...";
-
-            try {
-                const res = await fetch('/pay', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone, amount })
-                });
-                const data = await res.json();
-
-                if (!res.ok) throw new Error(data.error || "Failed to start payment");
-
-                statusTitle.textContent = "Checking Phone";
-                statusMsg.textContent = "Enter your PIN on the M-Pesa popup";
-                startPolling(data.trackingId);
-
-            } catch (err) {
-                statusTitle.textContent = "Error";
-                statusMsg.textContent = err.message;
-                statusSpinner.style.display = 'none';
-                document.getElementById('cancelRow').innerHTML = `<button class="btn-cancel" onclick="resetForm()">Try Again</button>`;
-            }
-        }
-
-        function startPolling(id) {
-            pollInterval = setInterval(async () => {
-                try {
-                    const res = await fetch(`/status/${id}`);
-                    const data = await res.json();
-
-                    if (data.status === 'success') {
-                        clearInterval(pollInterval);
-                        window.location.href = `/thankyou?trackingId=${id}&amount=${amountArr.value}&phone=254${phoneArr.value}`;
-                    } else if (data.status === 'failed') {
-                        clearInterval(pollInterval);
-                        alert("Payment failed or was cancelled by user.");
-                        resetForm();
-                    }
-                } catch (e) { console.error("Poll error", e); }
-            }, 3000);
-        }
     </script>
 </body>
 
