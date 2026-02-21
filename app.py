@@ -179,8 +179,14 @@ def fetch_lipana_status(transaction_id: str) -> dict | None:
 # ─────────────────────────────────────────────
 @app.route("/")
 def index():
-    """Serve checkout page."""
+    """Serve landing / selection page."""
     return send_from_directory("public", "index.html")
+
+
+@app.route("/checkout")
+def checkout_page():
+    """Serve the M-Pesa STK checkout page."""
+    return send_from_directory("public", "checkout.html")
 
 
 @app.route("/thankyou")

@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkout · Skitech Solutions</title>
+    <title>Welcome · Skitech Secure Checkout</title>
     <meta name="description"
-        content="Secure M-Pesa STK Push checkout by Skitech Solutions — fast, safe and reliable payments." />
+        content="Welcome to Skitech Solutions' secure payment gateway. Choose your preferred payment method." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
@@ -29,11 +29,9 @@
             --border: rgba(255, 255, 255, 0.08);
             --accent: #15d152;
             --accent2: #0fa944;
-            --danger: #ef4444;
-            --warning: #f59e0b;
             --text: #f0f4ff;
             --muted: #8b99b5;
-            --radius: 16px;
+            --radius: 20px;
             --shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
             --gradient-op: 0.12;
         }
@@ -43,9 +41,9 @@
             --surface: #ffffff;
             --surface2: #f1f5f9;
             --border: rgba(0, 0, 0, 0.08);
-            --text: #0f172a;
+            --text: #1e293b;
             --muted: #64748b;
-            --shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
             --gradient-op: 0.05;
         }
 
@@ -64,27 +62,28 @@
                 radial-gradient(ellipse 40% 30% at 90% 80%, rgba(59, 130, 246, calc(var(--gradient-op) * 0.7)) 0%, transparent 60%);
         }
 
-        /* ─── Card ─── */
         .card {
             width: 100%;
-            max-width: 440px;
+            max-width: 480px;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             overflow: hidden;
             position: relative;
-            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            min-height: 520px;
+            transition: transform 0.3s ease;
         }
 
-        /* ─── Theme Toggle ─── */
         .theme-toggle {
             position: absolute;
-            top: 28px;
-            right: 28px;
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
+            top: 24px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             background: var(--surface2);
             border: 1px solid var(--border);
             display: flex;
@@ -102,11 +101,6 @@
             transform: translateY(-1px);
         }
 
-        .theme-toggle svg {
-            width: 18px;
-            height: 18px;
-        }
-
         [data-theme="light"] .sun-icon {
             display: none;
         }
@@ -115,497 +109,185 @@
             display: none;
         }
 
-        /* Default to dark if no theme set yet */
         :root:not([data-theme]) .moon-icon {
             display: none;
         }
 
-        /* ─── Card Header ─── */
-        .card-header {
-            padding: 32px 32px 24px;
-            border-bottom: 1px solid var(--border);
-            background: linear-gradient(135deg, rgba(21, 209, 82, 0.06) 0%, transparent 60%);
+        .card-content {
+            padding: 48px 40px 32px;
+            flex: 1;
         }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 18px;
-        }
-
-        .brand-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .brand-icon svg {
-            width: 20px;
-            height: 20px;
-            fill: #fff;
-        }
-
-        .brand-name {
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: 0.01em;
-        }
-
-        .brand-name span {
-            color: var(--accent);
-        }
-
-        .card-title {
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            margin-bottom: 6px;
-        }
-
-        .card-subtitle {
-            font-size: 13.5px;
-            color: var(--muted);
-            line-height: 1.55;
-        }
-
-        /* ─── Card Body ─── */
-        .card-body {
-            padding: 28px 32px 32px;
-        }
-
-        /* ─── Order Summary ─── */
-        .order-summary {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 22px;
-        }
-
-        .order-summary-label {
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--muted);
-            margin-bottom: 10px;
-        }
-
-        .order-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-        }
-
-        .order-item-name {
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        .order-item-price {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--accent);
-        }
-
-        .order-item-price sup {
-            font-size: 13px;
-            vertical-align: super;
-        }
-
-        /* ─── Form ─── */
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        label {
-            display: block;
-            font-size: 12.5px;
-            font-weight: 600;
-            color: var(--muted);
-            margin-bottom: 7px;
-            letter-spacing: 0.02em;
-        }
-
-        .input-wrap {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--muted);
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-        }
-
-        /* ─── Phone prefix group ─── */
-        .phone-wrap {
-            display: flex;
-            align-items: stretch;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .phone-wrap:focus-within {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(21, 209, 82, 0.15);
-        }
-
-        .phone-prefix {
-            display: flex;
+        .welcome-badge {
+            display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 0 12px 0 14px;
-            background: rgba(21, 209, 82, 0.08);
-            border-right: 1px solid var(--border);
-            font-size: 14.5px;
-            font-weight: 700;
+            background: rgba(21, 209, 82, 0.1);
             color: var(--accent);
-            white-space: nowrap;
-            user-select: none;
-            letter-spacing: 0.02em;
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 20px;
         }
 
-        .phone-prefix svg {
-            color: var(--muted);
-            flex-shrink: 0;
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+            line-height: 1.2;
         }
 
-        input[type="tel"] {
-            flex: 1;
-            min-width: 0;
-            padding: 13px 14px;
-            background: transparent;
-            border: none;
-            color: var(--text);
-            font-family: inherit;
+        .subtitle {
             font-size: 15px;
-            font-weight: 500;
-            outline: none;
-            -moz-appearance: textfield;
-            appearance: textfield;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 32px;
         }
 
-        input[type="number"] {
-            width: 100%;
-            padding: 13px 14px 13px 42px;
+        .payment-options {
+            display: grid;
+            gap: 16px;
+        }
+
+        .option-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
             background: var(--surface2);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text);
-            font-family: inherit;
-            font-size: 15px;
-            font-weight: 500;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            -moz-appearance: textfield;
-            appearance: textfield;
+            border-radius: 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
 
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            appearance: none;
-        }
-
-        input[type="number"]:focus {
+        .option-card:not(.disabled):hover {
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(21, 209, 82, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
-        input::placeholder {
-            color: var(--muted);
-            opacity: 0.7;
-        }
-
-        /* ─── Pay Button ─── */
-        #payBtn {
-            width: 100%;
-            margin-top: 8px;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            color: #fff;
-            border: none;
+        .option-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--surface);
             border-radius: 12px;
-            font-family: inherit;
-            font-size: 15.5px;
-            font-weight: 700;
-            cursor: pointer;
-            letter-spacing: 0.01em;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 9px;
-            transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
-            box-shadow: 0 6px 24px rgba(21, 209, 82, 0.35);
-            position: relative;
-            overflow: hidden;
-        }
-
-        #payBtn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
-            transform: translateX(-100%);
-        }
-
-        #payBtn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(21, 209, 82, 0.45);
-        }
-
-        #payBtn:hover:not(:disabled)::before {
-            animation: shimmer 0.7s ease forwards;
-        }
-
-        @keyframes shimmer {
-            to {
-                transform: translateX(100%);
-            }
-        }
-
-        #payBtn:active:not(:disabled) {
-            transform: translateY(0);
-        }
-
-        #payBtn:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-spinner {
-            display: none;
-            width: 18px;
-            height: 18px;
-            border: 2.5px solid rgba(255, 255, 255, 0.4);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.75s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* ─── Status Banner ─── */
-        #statusBox {
-            margin-top: 18px;
-            border-radius: 12px;
-            overflow: hidden;
-            display: none;
-        }
-
-        .status-inner {
-            padding: 16px 18px;
-            display: flex;
-            align-items: flex-start;
-            gap: 13px;
-        }
-
-        .status-icon {
-            font-size: 22px;
             flex-shrink: 0;
-            line-height: 1;
-            margin-top: 1px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
         }
 
-        .status-text h4 {
-            font-size: 14px;
+        .option-card:hover .option-icon {
+            border-color: var(--accent);
+            background: rgba(21, 209, 82, 0.05);
+        }
+
+        .option-info {
+            flex: 1;
+        }
+
+        .option-name {
+            font-size: 16px;
             font-weight: 700;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .status-text p {
+        .option-desc {
             font-size: 13px;
-            line-height: 1.5;
-            opacity: 0.85;
+            color: var(--muted);
         }
 
-        /* States */
-        #statusBox.pending {
-            background: rgba(245, 158, 11, 0.12);
-            border: 1px solid rgba(245, 158, 11, 0.3);
+        .option-card.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            filter: grayscale(0.5);
         }
 
-        #statusBox.pending .status-text {
-            color: #fbbf24;
+        .badge-soon {
+            font-size: 10px;
+            background: var(--surface);
+            color: var(--muted);
+            padding: 2px 8px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            font-weight: 600;
         }
 
-        #statusBox.success {
-            background: rgba(21, 209, 82, 0.12);
-            border: 1px solid rgba(21, 209, 82, 0.35);
+        .arrow-icon {
+            color: var(--muted);
+            opacity: 0.5;
+            transition: all 0.2s;
         }
 
-        #statusBox.success .status-text {
-            color: #4ade80;
-        }
-
-        #statusBox.error {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        #statusBox.error .status-text {
-            color: #f87171;
-        }
-
-        /* Progress dots for pending */
-        .dots::after {
-            content: '';
-            animation: dots 1.2s steps(3, end) infinite;
-        }
-
-        @keyframes dots {
-            0% {
-                content: '';
-            }
-
-            33% {
-                content: '.';
-            }
-
-            66% {
-                content: '..';
-            }
-
-            100% {
-                content: '...';
-            }
+        .option-card:hover .arrow-icon {
+            color: var(--accent);
+            opacity: 1;
+            transform: translateX(3px);
         }
 
         /* ─── Footer ─── */
         .card-footer {
-            margin-top: 24px;
+            padding: 24px 40px;
+            border-top: 1px solid var(--border);
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.02));
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             font-size: 12px;
             color: var(--muted);
             text-align: center;
-            line-height: 1.6;
         }
 
-        .card-footer .footer-brand {
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        .footer-brand {
             font-weight: 600;
             color: var(--text);
         }
 
-        .card-footer .footer-brand a {
+        .footer-brand a {
             color: var(--accent);
             text-decoration: none;
-            transition: opacity 0.2s;
         }
 
-        .card-footer .footer-brand a:hover {
-            opacity: 0.75;
-            text-decoration: underline;
-        }
-
-        .card-footer .footer-meta {
+        .footer-meta {
             display: flex;
             align-items: center;
             gap: 6px;
-            flex-wrap: wrap;
-            justify-content: center;
         }
 
-        .card-footer .footer-dot {
-            opacity: 0.4;
-        }
-
-        .card-footer svg {
-            width: 12px;
-            height: 12px;
-            flex-shrink: 0;
-        }
-
-        /* ─── Responsive ─── */
         @media (max-width: 500px) {
-            body {
-                padding: 12px;
-                align-items: flex-start;
-                /* Better for long forms on mobile */
-                padding-top: 5vh;
-            }
-
             .card {
-                max-width: 100%;
-                border-radius: 20px;
-                /* Slightly rounder on mobile for feel */
-                border: none;
-                box-shadow: none;
-                /* Cleaner look on mobile */
+                min-height: unset;
+                border-radius: 0;
+                min-height: 100dvh;
             }
 
-            .card-header,
-            .card-body {
-                padding-left: 20px;
-                padding-right: 20px;
+            .card-content {
+                padding: 60px 24px 32px;
             }
 
-            .card-title {
-                font-size: 22px;
+            .card-footer {
+                padding: 24px;
             }
-
-            .theme-toggle {
-                top: 20px;
-                right: 20px;
-            }
-        }
-
-        /* ─── Cancel Button ─── */
-        .cancel-btn {
-            display: none;
-            margin-top: 12px;
-            padding: 8px 16px;
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            border-radius: 8px;
-            color: var(--danger);
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: fit-content;
-        }
-
-        .cancel-btn:hover {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: var(--danger);
-        }
-
-        #statusBox.pending .cancel-btn {
-            display: block;
         }
     </style>
 </head>
 
 <body>
-
-    <div class="card" role="main">
-        <!-- Theme Toggle -->
-        <button class="theme-toggle" id="themeToggle" title="Toggle Light/Dark Mode" aria-label="Toggle theme">
+    <div class="card">
+        <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
             <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="5"></circle>
                 <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -622,119 +304,89 @@
             </svg>
         </button>
 
-        <!-- Header -->
-        <div class="card-header">
-            <div class="brand">
-                <div class="brand-icon" aria-hidden="true">
-                    <!-- Lightning bolt icon -->
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-                    </svg>
-                </div>
-                <span class="brand-name">Skitech <span>Solutions</span></span>
-            </div>
-            <h1 class="card-title">Secure Checkout</h1>
-            <p class="card-subtitle">Pay safely via M-Pesa STK Push. A prompt will be sent to your phone.</p>
-        </div>
-
-        <!-- Body -->
-        <div class="card-body">
-
-            <!-- Order Summary -->
-            <div class="order-summary" aria-label="Order summary">
-                <div class="order-summary-label">Order Summary</div>
-                <div class="order-item">
-                    <span class="order-item-name">Service Payment</span>
-                    <span class="order-item-price" id="summaryAmount">KES <span id="displayAmount">—</span></span>
-                </div>
-            </div>
-
-            <!-- Phone Number -->
-            <div class="form-group">
-                <label for="phone">M-Pesa Phone Number</label>
-                <div class="phone-wrap">
-                    <span class="phone-prefix" aria-hidden="true">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-                            <line x1="12" y1="18" x2="12.01" y2="18" />
-                        </svg>
-                        +254
-                    </span>
-                    <input type="tel" id="phone" placeholder="712345678" autocomplete="tel" inputmode="numeric"
-                        maxlength="9" aria-label="M-Pesa phone number (without country code)"
-                        oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
-                </div>
-            </div>
-
-            <!-- Amount -->
-            <div class="form-group">
-                <label for="amount">Amount (KES)</label>
-                <div class="input-wrap">
-                    <span class="input-icon" aria-hidden="true">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="16 10 12 6 8 10" />
-                            <line x1="12" y1="6" x2="12" y2="18" />
-                        </svg>
-                    </span>
-                    <input type="number" id="amount" placeholder="Enter amount" min="1"
-                        aria-label="Payment amount in KES" />
-                </div>
-            </div>
-
-            <!-- Pay Button -->
-            <button id="payBtn" onclick="pay()" aria-live="polite">
-                <span class="btn-spinner" id="btnSpinner" aria-hidden="true"></span>
-                <svg id="btnIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white"
-                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <div class="card-content">
+            <div class="welcome-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 </svg>
-                <span id="btnLabel">Pay with M-Pesa</span>
-            </button>
+                Secure Portal
+            </div>
+            <h1>Secure Checkout</h1>
+            <p class="subtitle">Welcome! All our official payment channels are fully audited and encrypted for your
+                safety.</p>
 
-            <!-- Status Box -->
-            <div id="statusBox" role="alert" aria-live="polite">
-                <div class="status-inner">
-                    <div class="status-icon" id="statusIcon" aria-hidden="true">⏳</div>
-                    <div class="status-text">
-                        <h4 id="statusTitle">Processing</h4>
-                        <p id="statusMsg">Please wait<span class="dots"></span></p>
-                        <button class="cancel-btn" id="cancelBtn" onclick="cancelPayment()">Cancel & Edit</button>
+            <div class="payment-options">
+                <!-- M-Pesa -->
+                <a href="/checkout" class="option-card">
+                    <div class="option-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="option-info">
+                        <div class="option-name">M-Pesa STK Push</div>
+                        <div class="option-desc">Pay instantly using your mobile phone</div>
+                    </div>
+                    <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <!-- Coming Soon 1 -->
+                <div class="option-card disabled">
+                    <div class="option-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="4" width="22" height="16" rx="3" ry="3"></rect>
+                            <line x1="1" y1="10" x2="23" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="option-info">
+                        <div class="option-name">Card Payment <span class="badge-soon">Coming Soon</span></div>
+                        <div class="option-desc">Visa, Mastercard & Amex</div>
+                    </div>
+                </div>
+
+                <!-- Coming Soon 2 -->
+                <div class="option-card disabled">
+                    <div class="option-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="option-info">
+                        <div class="option-name">Bank Transfer <span class="badge-soon">Coming Soon</span></div>
+                        <div class="option-desc">Direct pay from your bank app</div>
                     </div>
                 </div>
             </div>
-
-            <!-- Footer -->
-            <footer class="card-footer" aria-label="Footer">
-                <div class="footer-brand">
-                    Built by
-                    <a href="https://skitech-website.vercel.app/" target="_blank" rel="noopener noreferrer"
-                        aria-label="Skitech Solutions website">Skitech Solutions</a>
-                    &mdash; All rights reserved &copy; 2026
-                </div>
-                <div class="footer-meta">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" aria-hidden="true">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
-                    Safe &amp; Secure
-                    <span class="footer-dot">&bull;</span>
-                    Powered by Lipana Technologies
-                </div>
-            </footer>
-
         </div>
-    </div><!-- /.card -->
+
+        <footer class="card-footer">
+            <div class="footer-brand">
+                Built by <a href="https://skitech-website.vercel.app/" target="_blank">Skitech Solutions</a>
+                &mdash; All rights reserved &copy; 2026
+            </div>
+            <div class="footer-meta">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                Safe &amp; Secure &bull; Powered by Lipana Technologies
+            </div>
+        </footer>
+    </div>
 
     <script>
-        // ── Theme Logic ────────────────────────────────
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
-
-        // Initialize from local storage or prefers-color-scheme
         const storedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
         html.setAttribute('data-theme', storedTheme);
 
@@ -744,171 +396,6 @@
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
         });
-
-        // ── Update display amount live ──────────────────
-        const amountInput = document.getElementById('amount');
-        const displayAmount = document.getElementById('displayAmount');
-
-        function updateSummary() {
-            const v = parseFloat(amountInput.value);
-            displayAmount.textContent = isNaN(v) || v <= 0 ? '—' : v.toLocaleString('en-KE');
-        }
-
-        amountInput.addEventListener('input', updateSummary);
-        updateSummary();
-
-        // ── UI helpers ─────────────────────────────────
-        function setStatus(state, icon, title, msg) {
-            const box = document.getElementById('statusBox');
-            box.className = state;
-            box.style.display = 'block';
-            document.getElementById('statusIcon').textContent = icon;
-            document.getElementById('statusTitle').textContent = title;
-            const msgEl = document.getElementById('statusMsg');
-
-            if (state === 'pending') {
-                msgEl.innerHTML = msg + '<span class="dots"></span>';
-            } else {
-                msgEl.textContent = msg;
-            }
-        }
-
-        function setLoading(loading) {
-            const btn = document.getElementById('payBtn');
-            const spinner = document.getElementById('btnSpinner');
-            const icon = document.getElementById('btnIcon');
-            const label = document.getElementById('btnLabel');
-
-            btn.disabled = loading;
-            spinner.style.display = loading ? 'block' : 'none';
-            icon.style.display = loading ? 'none' : 'block';
-            label.textContent = loading ? 'Sending to phone…' : 'Pay with M-Pesa';
-        }
-
-        let pollTimer = null;
-
-        function cancelPayment() {
-            if (pollTimer) {
-                clearInterval(pollTimer);
-                pollTimer = null;
-            }
-            document.getElementById('statusBox').style.display = 'none';
-            setLoading(false);
-        }
-
-        // ── Normalise phone number ─────────────────────
-        // User only types the 9-digit suffix; we prepend 254.
-        function normalisePhone(suffix) {
-            const digits = suffix.trim().replace(/\D/g, '');
-            return '254' + digits;
-        }
-
-        // ── Initiate payment ───────────────────────────
-        async function pay() {
-            const suffix = document.getElementById('phone').value.trim();
-            const rawAmount = document.getElementById('amount').value;
-
-            // Suffix must be exactly 9 digits (e.g. 712345678)
-            if (!/^[0-9]{9}$/.test(suffix)) {
-                setStatus('error', '⚠️', 'Invalid Phone', 'Enter the 9 digits after +254 (e.g. 712345678).');
-                return;
-            }
-
-            const phone = normalisePhone(suffix);
-            const amount = parseInt(rawAmount, 10);
-
-            if (!amount || amount < 1) {
-                setStatus('error', '⚠️', 'Invalid Amount', 'Enter a valid amount of at least KES 1.');
-                return;
-            }
-
-            setLoading(true);
-            setStatus('pending', '📲', 'Check Your Phone', 'An M-Pesa prompt is being sent to your phone');
-
-            try {
-                const res = await fetch('/pay', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone, amount }),
-                });
-
-                const data = await res.json();
-
-                if (!res.ok) {
-                    throw new Error(data.error || `Server error (${res.status})`);
-                }
-
-                if (!data.trackingId) {
-                    throw new Error('No tracking ID received from server.');
-                }
-
-                poll(data.trackingId);
-
-            } catch (err) {
-                setStatus('error', '❌', 'Payment Failed', err.message || 'Something went wrong. Please try again.');
-                setLoading(false);
-            }
-        }
-
-        // ── Poll for status ────────────────────────────
-        function poll(trackingId) {
-            const MAX_POLLS = 40;   // ~2 minutes
-            const INTERVAL = 3000; // 3 seconds
-            let count = 0;
-
-            pollTimer = setInterval(async () => {
-                count++;
-
-                try {
-                    const res = await fetch('/status/' + encodeURIComponent(trackingId));
-                    const data = await res.json();
-
-                    if (data.status === 'success') {
-                        clearInterval(pollTimer);
-                        pollTimer = null;
-                        setStatus('success', '✅', 'Payment Confirmed!',
-                            `M-Pesa payment received${data.receipt ? ' · Ref: ' + data.receipt : ''}. Redirecting…`);
-
-                        // Redirect to thank-you page with receipt info
-                        const params = new URLSearchParams({
-                            trackingId,
-                            receipt: data.receipt || '',
-                            phone: data.phone || '',
-                            amount: data.amount || '',
-                        });
-                        setTimeout(() => {
-                            window.location.href = '/thankyou?' + params.toString();
-                        }, 2000);
-
-                    } else if (data.status === 'failed') {
-                        clearInterval(pollTimer);
-                        pollTimer = null;
-                        setStatus('error', '❌', 'Transaction Failed',
-                            'The M-Pesa transaction was declined or cancelled. Please try again.');
-                        setLoading(false);
-
-                    } else if (count >= MAX_POLLS) {
-                        clearInterval(pollTimer);
-                        pollTimer = null;
-                        setStatus('error', '⏱️', 'Request Timed Out',
-                            'We did not receive a payment confirmation. If you completed the M-Pesa prompt, please contact support.');
-                        setLoading(false);
-                    }
-                    // else still pending – keep polling
-
-                } catch (err) {
-                    console.warn('Status poll error:', err);
-                    // Non-fatal – keep polling unless we hit the max
-                    if (count >= MAX_POLLS) {
-                        clearInterval(pollTimer);
-                        pollTimer = null;
-                        setStatus('error', '❌', 'Connection Error',
-                            'Could not verify payment status. Please check your M-Pesa messages.');
-                        setLoading(false);
-                    }
-                }
-            }, INTERVAL);
-        }
     </script>
 </body>
 
