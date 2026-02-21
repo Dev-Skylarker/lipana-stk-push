@@ -637,9 +637,9 @@
                             <path d="M12 6v12M6 12h12" />
                         </svg>
                     </span>
-                    <input type="number" id="amount" placeholder="e.g. 10" min="1" aria-label="Payment amount" />
+                    <input type="number" id="amount" placeholder="e.g. 10" min="10" aria-label="Payment amount" />
                 </div>
-                <span class="input-hint">Minimum payment is KES 1</span>
+                <span class="input-hint">Minimum payment is KES 10</span>
             </div>
 
             <!-- Trust Message -->
@@ -723,7 +723,7 @@
         const validate = () => {
             const phoneValid = /^[0-9]{9}$/.test(phoneInput.value);
             const amountVal = parseFloat(amountInput.value);
-            const amountValid = !isNaN(amountVal) && amountVal >= 1;
+            const amountValid = !isNaN(amountVal) && amountVal >= 10;
 
             phoneContainer.classList.toggle('error', phoneInput.value.length > 0 && !phoneValid);
             amountInput.classList.toggle('error', amountInput.value.length > 0 && !amountValid);

@@ -222,10 +222,10 @@ def initiate_payment():
 
     try:
         amount = int(float(amount))
-        if amount < 1:
-            raise ValueError
+        if amount < 10:
+            return jsonify({"error": "Minimum payment amount is KES 10"}), 400
     except (ValueError, TypeError):
-        return jsonify({"error": "Amount must be a positive integer"}), 400
+        return jsonify({"error": "Amount must be a valid number"}), 400
 
     # Normalise phone: ensure +254XXXXXXXXX format
     phone = phone.lstrip("+").lstrip("0")
@@ -360,7 +360,6 @@ def webhook():
         payment.failed   →  data.status == "failed"
         payment.pending  →  data.status == "pending"
     """
-    # ── Capture raw body BEFORE any parsing (required for sig verification) ──
     raw_payload = request.get_data()
 
     signature = request.headers.get("X-Lipana-Signature", "")
@@ -368,12 +367,10 @@ def webhook():
         log.warning("Webhook received without X-Lipana-Signature header")
         return jsonify({"error": "Missing signature"}), 401
 
-    # ── Verify HMAC-SHA256 signature ──────────
     if not verify_webhook_signature(raw_payload, signature):
         log.warning("Webhook signature mismatch — possible spoofed request")
         return jsonify({"error": "Invalid signature"}), 401
 
-    # ── Parse verified payload ────────────────
     try:
         data = json.loads(raw_payload)
     except json.JSONDecodeError:
